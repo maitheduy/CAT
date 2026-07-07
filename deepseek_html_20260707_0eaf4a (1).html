@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>George Müller · Beloved Friend of Little Waifs</title>
+    <!-- Google Font cho phong cách ấm áp, dễ đọc -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f7f3eb;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        /* khung slide tỉ lệ 16:9 */
+        .slide-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 16 / 9;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .slide-wrapper {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            background: #fefcf8;
+            position: relative;
+        }
+        /* nội dung slide */
+        .slide {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+            justify-content: flex-start;
+            animation: fadeSlide 0.3s ease;
+        }
+        .slide.active {
+            display: flex;
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0.4; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        /* kiểu chữ trang trọng, ấm áp */
+        h1, h2, h3 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            color: #2c3e4f;
+            letter-spacing: -0.01em;
+        }
+        h1 {
+            font-size: 2.6rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0.3rem;
+            line-height: 1.2;
+            border-left: 6px solid #b7a48b;
+            padding-left: 1.2rem;
+        }
+        h2 {
+            font-size: 2rem;
+            margin: 0.8rem 0 0.6rem 0;
+            color: #4a5d6b;
+        }
+        h3 {
+            font-size: 1.6rem;
+            color: #5b6f7e;
+            margin: 0.5rem 0 0.5rem 0;
+        }
+        .subhead {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6e7f8d;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.5rem;
+        }
+        .bilingual {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin: 0.5rem 0;
+        }
+        .en {
+            font-weight: 500;
+            color: #1f2a33;
+            font-size: 1.05rem;
+        }
+        .vi {
+            font-weight: 400;
+            color: #4e5f6b;
+            font-size: 0.98rem;
+            border-left: 2px solid #d6ccc0;
+            padding-left: 0.9rem;
+            margin-top: 0.2rem;
+        }
+        .quote {
+            background: #f2eee9;
+            padding: 1.2rem 1.8rem;
+            border-radius: 28px;
+            margin: 0.7rem 0;
+            font-style: italic;
+            border-left: 6px solid #b7a48b;
+        }
+        .quote p {
+            margin: 0.3rem 0;
+        }
+        .divider {
+            border: none;
+            border-top: 2px dashed #d6cbbc;
+            margin: 0.6rem 0;
+        }
+        .flex-row {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .col {
+            flex: 1;
+            min-width: 200px;
+        }
+        .small-meta {
+            font-size: 0.9rem;
+            color: #6a7b88;
+            margin-top: 0.2rem;
+        }
+        /* vocaroo nhúng */
+        .audio-wrapper {
+            margin: 0.6rem 0 0.2rem 0;
+            background: #f5f1ec;
+            border-radius: 60px;
+            padding: 8px 14px 8px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #e2d8ce;
+            max-width: 100%;
+            flex-wrap: wrap;
+        }
+        .audio-wrapper iframe {
+            max-width: 100%;
+            border-radius: 40px;
+            height: 52px;
+        }
+        .audio-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #4e5f6b;
+            background: #e8dfd6;
+            padding: 4px 14px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+        /* nút điều hướng */
+        .nav-bar {
+            background: #fcf9f5;
+            padding: 0.8rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e5dbd1;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .nav-btn {
+            background: #eae2d9;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e4f;
+            padding: 0.55rem 1.8rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .nav-btn:hover {
+            background: #d8cdc0;
+            transform: scale(0.97);
+        }
+        .nav-btn:active {
+            background: #c9bbac;
+        }
+        .nav-btn.primary {
+            background: #b7a48b;
+            color: #1f1a15;
+        }
+        .nav-btn.primary:hover {
+            background: #a69077;
+        }
+        .slide-counter {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #5b6f7e;
+            background: #ede8e1;
+            padding: 0.3rem 1.4rem;
+            border-radius: 60px;
+        }
+        .attribution {
+            font-size: 0.75rem;
+            color: #8d9ca8;
+            margin-top: 0.2rem;
+        }
+        /* responsive */
+        @media (max-width: 700px) {
+            .slide-wrapper { padding: 1.2rem; }
+            h1 { font-size: 1.9rem; padding-left: 0.8rem; }
+            h2 { font-size: 1.5rem; }
+            .nav-bar { padding: 0.6rem 1.2rem; flex-direction: column; align-items: stretch; }
+            .nav-btn { justify-content: center; }
+        }
+        /* thanh cuộn tùy chỉnh */
+        .slide-wrapper::-webkit-scrollbar { width: 5px; }
+        .slide-wrapper::-webkit-scrollbar-track { background: #ede8e1; border-radius: 10px; }
+        .slide-wrapper::-webkit-scrollbar-thumb { background: #c5b7a8; border-radius: 10px; }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+    <div class="slide-wrapper" id="slideWrapper">
+        <!-- SLIDE 1 -->
+        <div class="slide active" data-index="0">
+            <div class="slide-content">
+                <div class="subhead">⭐ Beloved Friend of Little Waifs</div>
+                <h1>George Müller</h1>
+                <div class="bilingual">
+                    <span class="en">George Müller knew the power of the Gospel to change lives, for Christ had changed him.</span>
+                    <span class="vi">George Müller biết rõ sức mạnh của Phúc Âm có thể thay đổi cuộc đời, vì Chúa đã thay đổi ông.</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">When he was only ten, he started stealing money from his father… By the time he went to the university, he was known for his arrogance.</span>
+                    <span class="vi">Khi mới mười tuổi, ông đã bắt đầu ăn cắp tiền từ cha mình… Đến khi vào đại học, ông nổi tiếng vì sự kiêu ngạo.</span>
+                </div>
+                <div class="quote">
+                    <p class="en">“I had never heard the Gospel preached. Nobody told me that Jesus meant for Christians, by the help of God, to live according to the Holy Scriptures.”</p>
+                    <p class="vi">“Tôi chưa bao giờ nghe Phúc Âm được giảng. Không ai nói với tôi rằng Chúa Giê-xu có nghĩa là cho Cơ Đốc nhân, nhờ sự giúp đỡ của Đức Chúa Trời, sống theo Kinh Thánh.”</p>
+                </div>
+                <div class="bilingual">
+                    <span class="en">George Müller went on to devote his life to sharing the Gospel. He is best known for the loving care he showed to thousands of orphans and for trusting God alone to supply all his needs.</span>
+                    <span class="vi">George Müller tiếp tục cống hiến cuộc đời mình để chia sẻ Phúc Âm. Ông được biết đến nhiều nhất vì sự chăm sóc yêu thương dành cho hàng ngàn trẻ mồ côi và vì chỉ tin cậy nơi Đức Chúa Trời.</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+                <div class="attribution">Anna Talbott McPherson · Bài Beloved Friend</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Children, children everywhere -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <h2>🧒 Những đứa trẻ · The children</h2>
+                <div class="bilingual">
+                    <span class="en">Children, children everywhere. Hordes of them. George Müller watched them pour down the steps into the dining hall.</span>
+                    <span class="vi">Trẻ em, trẻ em ở khắp mọi nơi. Từng đàn đông đúc. George Müller nhìn chúng đổ xuống cầu thang vào phòng ăn tối.</span>
+                </div>
+                <div class="flex-row">
+                    <div class="col">
+                        <div class="bilingual">
+                            <span class="en">Flaxen-haired, golden-haired, brown-haired, black-haired. Boys with locks cropped closely. Girls with saucy pigtails.</span>
+                            <span class="vi">Những đứa trẻ tóc vàng óng, tóc vàng, tóc nâu, tóc đen. Những cậu bé tóc cắt ngắn. Những cô bé bím tóc nghịch ngợm.</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="bilingual">
+                            <span class="en">What potentialities! What responsibilities! And what scamps these waifs could be—but they captivated his affection.</span>
+                            <span class="vi">Biết bao tiềm năng! Biết bao trách nhiệm! Những đứa trẻ lang thang tinh nghịch—nhưng chúng chiếm trọn tình cảm của ông.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bilingual">
+                    <span class="en">Müller was reminded that in four more houses children were streaming down steps—more than 2,000 homeless babes looking to him as to a father.</span>
+                    <span class="vi">Müller nhận ra rằng trong bốn ngôi nhà nữa, hơn 2.000 em bé vô gia cư đang nhìn ông như một người cha.</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Milk & prayer -->
+        <div class="slide" data-index="2">
+            <div class="slide-content">
+                <h2>🥛 Sữa và cầu nguyện</h2>
+                <div class="bilingual">
+                    <span class="en">That night every orphan’s mug was full of milk. No little one knew that not a drop remained for breakfast.</span>
+                    <span class="vi">Đêm đó, cốc sữa của mọi đứa trẻ mồ côi đều đầy. Không một đứa nhỏ nào biết rằng không còn một giọt nào cho bữa sáng.</span>
+                </div>
+                <div class="quote">
+                    <p class="en">“What would he do? Why, he would do as he had done hundreds of times before—go to his knees and tell his heavenly Father that His children needed milk.”</p>
+                    <p class="vi">“Người đàn ông đã cưu mang biết bao đứa trẻ vô gia cư sẽ làm gì? Ông sẽ quỳ xuống và thưa với Cha Thiên Thượng rằng con cái Ngài cần sữa.”</p>
+                </div>
+                <div class="bilingual">
+                    <span class="en">The next morning dawned, Müller had already been in prayer for two hours—not worrying but thanking God that the milk was on its way!</span>
+                    <span class="vi">Sáng hôm sau, Müller đã cầu nguyện hai giờ—không lo lắng mà cảm tạ rằng sữa đang trên đường đến!</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">The children bowed their heads, and Mr. Müller thanked the kind heavenly Father for daily bread—and for milk!</span>
+                    <span class="vi">Đầu chúng cúi xuống, ông Müller cảm tạ Cha Thiên Thượng vì bánh hằng ngày—và vì sữa!</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">A loud knock: the milkman himself. “My wagon broke down… Come, help me carry it in, and it’s all yours. For nothing!”</span>
+                    <span class="vi">Tiếng gõ lớn: chính người bán sữa. “Xe của tôi bị hỏng… Giúp tôi mang vào, tất cả là của ông. Không lấy tiền!”</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Fog & faith -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <h2>🌫️ Sương mù · đức tin</h2>
+                <div class="bilingual">
+                    <span class="en">On a voyage from Liverpool to Quebec, the fog was so dense that progress was very slow. Mr. Müller went to the captain.</span>
+                    <span class="vi">Trên chuyến hải trình từ Liverpool đến Quebec, sương mù dày đặc. Ông Müller đến gặp thuyền trưởng.</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">“I must be in Quebec Saturday afternoon.” “That is impossible,” said the captain.</span>
+                    <span class="vi">“Tôi phải có mặt ở Quebec vào chiều thứ Bảy.” “Điều đó là không thể,” thuyền trưởng đáp.</span>
+                </div>
+                <div class="quote">
+                    <p class="en">“My eye is not on the density of the fog but on the living God who controls every circumstance of my life.”</p>
+                    <p class="vi">“Mắt tôi không nhìn vào độ dày của sương mù mà nhìn vào Đức Chúa Trời hằng sống, Đấng kiểm soát mọi hoàn cảnh.”</p>
+                </div>
+                <div class="bilingual">
+                    <span class="en">Müller knelt and prayed simply. Then he said to the captain: “I have known my Lord for fifty-seven years… If you open the door, you will find the fog gone.”</span>
+                    <span class="vi">Müller quỳ cầu nguyện đơn sơ. Rồi ông nói: “Tôi đã biết Chúa năm mươi bảy năm… Nếu ông mở cửa, sương mù sẽ tan.”</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">The captain opened the door upon a clear, fogless scene. George Müller was in Quebec on time.</span>
+                    <span class="vi">Vị thuyền trưởng mở cửa và thấy quang cảnh quang đăng. George Müller có mặt ở Quebec đúng giờ.</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Deck chair & prayer -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <h2>🪑 Chiếc ghế trên boong</h2>
+                <div class="bilingual">
+                    <span class="en">On a return trip, Müller asked the express agent: “Has a deck chair come from New York for me?” “No… it cannot possibly come now in time.”</span>
+                    <span class="vi">Trên chuyến trở về, Müller hỏi nhân viên chuyển phát: “Có ghế ngồi trên boong từ New York gửi đến cho tôi không?” “Không… không thể kịp.”</span>
+                </div>
+                <div class="bilingual">
+                    <span class="en">Major Whittle offered to buy another, but Müller refused: “Our heavenly Father will send the chair from New York. Mrs. Müller is very sick and we have prayed especially.”</span>
+                    <span class="vi">Thiếu tá Whittle đề nghị mua ghế khác, nhưng Müller từ chối: “Cha Thiên Thượng sẽ gửi ghế từ New York. Bà Müller rất yếu và chúng tôi đã cầu nguyện đặc biệt.”</span>
+                </div>
+                <div class="quote">
+                    <p class="en">“I wonder if he is not carrying his faith principles too far,” thought the major.</p>
+                    <p class="vi">“Tôi tự hỏi liệu ông ấy có đang đưa đức tin đi quá xa không,” thiếu tá nghĩ.</p>
+                </div>
+                <div class="bilingual">
+                    <span class="en">Minutes later, a dray arrived with a chair from New York—Müller’s chair. He received it just as the boat was leaving, gave thanks to his Father in Heaven.</span>
+                    <span class="vi">Vài phút sau, một xe tải đến với chiếc ghế từ New York—ghế của Müller. Ông nhận được khi tàu rời bến, và tạ ơn Cha Thiên Thượng.</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Secret & legacy -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <h2>🌟 Bí mật · sự thánh khiết</h2>
+                <div class="bilingual">
+                    <span class="en">It took sixty-two years of his praying for two men before they finally yielded to God. Müller did not live to see it, but his faith grasped the answer.</span>
+                    <span class="vi">Ông đã cầu nguyện sáu mươi hai năm cho hai người đàn ông trước khi họ chịu khuất phục. Müller không sống để thấy, nhưng đức tin đã nắm bắt câu trả lời.</span>
+                </div>
+                <div class="quote">
+                    <p class="en">“There was a day when I died, utterly died to George Müller, to his opinions, preferences, tastes and will; died to the world… Since then I have studied to show myself approved only unto God. I love holiness more and more.”</p>
+                    <p class="vi">“Có một ngày tôi đã chết, hoàn toàn chết đối với George Müller… Kể từ đó, tôi học để chỉ được Đức Chúa Trời chấp nhận. Tôi yêu sự thánh khiết hơn và hơn nữa.”</p>
+                </div>
+                <div class="bilingual">
+                    <span class="en">George Müller filled his ninety-one years to the brim: “Caring for the children is the mere instrumentality to this end”—to show that God listens to prayer and is the same in power and love.</span>
+                    <span class="vi">George Müller sống trọn vẹn 91 năm: “Chăm sóc trẻ em chỉ là phương tiện để đạt được mục đích này”—cho thấy Đức Chúa Trời vẫn lắng nghe và yêu thương.</span>
+                </div>
+                <div class="bilingual" style="margin-top: 0.4rem;">
+                    <span class="en"><strong>Luke 9:23</strong> “If any man will come after Me, let him deny himself, and take up his cross daily, and follow Me.”</span>
+                    <span class="vi"><strong>Lu-ca 9:23</strong> “Nếu ai muốn theo Ta, phải từ bỏ chính mình, mỗi ngày vác thập giá mình mà theo Ta.”</span>
+                </div>
+                <div class="audio-wrapper">
+                    <span class="audio-label">🎙️ Thuyết minh</span>
+                    <iframe src="https://vocaroo.com/embed/12LtZ9RPPfVD?autoplay=0" width="240" height="52" frameborder="0" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- điều hướng -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prevSlide" aria-label="Slide trước">◀ Trước</button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="nav-btn primary" id="nextSlide" aria-label="Slide tiếp">Tiếp ▶</button>
+    </div>
+</div>
+<script>
+    (function() {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        const counter = document.getElementById('slideCounter');
+        let current = 0;
+        const total = slides.length;
+
+        function updateSlide(index) {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === index);
+            });
+            counter.textContent = `${index+1} / ${total}`;
+            // cuộn lên đầu mỗi slide (nếu có nội dung dài)
+            const wrapper = document.getElementById('slideWrapper');
+            if (wrapper) wrapper.scrollTop = 0;
+        }
+
+        function goTo(index) {
+            if (index < 0) index = total - 1;
+            if (index >= total) index = 0;
+            current = index;
+            updateSlide(current);
+        }
+
+        prevBtn.addEventListener('click', () => goTo(current - 1));
+        nextBtn.addEventListener('click', () => goTo(current + 1));
+
+        // hỗ trợ phím mũi tên
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current + 1); }
+        });
+
+        // khởi tạo
+        updateSlide(0);
+    })();
+</script>
+</body>
+</html>
